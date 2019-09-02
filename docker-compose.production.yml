@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web_server:
+    image: 681029217652.dkr.ecr.us-east-1.amazonaws.com/docker_demo_app/web_server:production
+    ports:
+      - 8080:8080
+    links:
+      - server_app
+
+  server_app:
+    image: 681029217652.dkr.ecr.us-east-1.amazonaws.com/docker_demo_app/server_app:production
+    command: bundle exec puma -C config/puma.rb
+    entrypoint: "./docker-entrypoint.sh"
+    expose:
+      - 3000
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: 7260a54aeab91c45d856a8aebf587e74
